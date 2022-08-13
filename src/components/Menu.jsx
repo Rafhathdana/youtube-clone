@@ -19,16 +19,16 @@ import SettingsBrightnessOutlinedIcon from '@mui/icons-material/SettingsBrightne
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 const Container = styled.div`
    flex: 1;
-   background-color: #020202;
-   height: 135vh;
-   color: white;
+   background-color: ${({theme}) => theme.bg};
+   height: 100vh;
+   color: ${({theme}) => theme.text};
    font-size: 14px;
    position: sticky;
    top: 0;
 `;
 const Wrapper = styled.div`
     padding: 18px 26px;
-`
+`;
 const Logo = styled.div`
   display: flex;
   align-items: center;
@@ -45,13 +45,12 @@ const Item = styled.div`
     gap: 20px;
     cursor: pointer;
     padding: 7.5px 0px;
-`
+`;
 const Hr = styled.hr`
 margin: 15px 0px;
-border: 0.5px solid #373737;
+border: 0.5px solid ${({theme}) => theme.soft};
 `
-const Login=styled.div`
-`
+const Login=styled.div``
 const Button=styled.button`
 padding: 5px 15px;
 background-color: transparent;
@@ -64,9 +63,15 @@ cursor: pointer;
 display: flex;
 align-items: center;
 gap: 5px;
-` 
+`;
+const Title = styled.h2`
+font-size: 14px;
+font-weight: 500;
+color:#aaaaaa;
+margin-bottom: 20px;
+`
 
-const Menu = () => {
+const Menu = ({darkMode, setDarkMode}) => {
     return (
         <Container>
             <Wrapper>
@@ -96,6 +101,7 @@ const Menu = () => {
                     <Button><AccountCircleOutlinedIcon />SIGN IN</Button>
                 </Login>
                 <Hr />
+                <Title>BEST OF WETUBE</Title>
                 <Item>
                     <LibraryMusicOutlinedIcon />Music
                 </Item>
@@ -124,7 +130,7 @@ const Menu = () => {
                 <Item>
                     <HelpOutlinedIcon />Help
                 </Item>
-                <Item>
+                <Item onClick={()=>setDarkMode(!darkMode)}>
                     <SettingsBrightnessOutlinedIcon />Light Mode
                 </Item>
             </Wrapper>
