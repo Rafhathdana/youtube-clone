@@ -1,19 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from "react-router-dom";
 const Container = styled.div`
-    width: 360px;
-    margin-bottom: 45px;
+    width: ${(props)=>props.type !=="sm" &&" 360px"};
+    margin-bottom: ${(props)=> props.type ==="sm" ? "10px" : "45px"};
     cursor: pointer;
+    display: ${(props) => props.type ==="sm" && "flex"};
+    gap:${(props)=>props.type==="sm" && "10px"};
 `;
 const Image = styled.img`
     width: 100%;
-    height: 202px;
+    height: ${(props)=>props.type==="sm" ? "100px":"202px"};
     background-color: #999999;
+    flex:${(props)=>props.type==="sm" && "1"};
     `;
 const Details = styled.div`
     display: flex;
-    margin-top: 16px;
+    margin-top: ${(props)=>props.type !== "sm" && "16px"};
     gap:12px;
+    flex:${(props)=>props.type==="sm" && "1"};
     `;
 const ChannelImage = styled.img`
     width: 36px;
@@ -21,6 +26,7 @@ const ChannelImage = styled.img`
     border-radius:50%;
     background-color: #999999;
     position: relative;  
+    display:${(props)=>props.type==="sm" && "none"};
     `;
 const Texts = styled.div``;
 const Title = styled.h1`
@@ -31,26 +37,27 @@ const Title = styled.h1`
 const ChannelName = styled.h2`
     font-size: 14px;
     color: ${({theme}) => theme.textSoft};
-    margin:9px 0px;
+    margin:8px 0px;
     `;
 const Info = styled.div`
     font-size: 14px;
     color: ${({theme})=> theme.textSoft};
 `;
-const Card = () => {
+const Card = ({type}) => {
     return (
-        <Container>
-            <Image src="https://i.ytimg.com/an_webp/H3uPYyZjsaw/mqdefault_6s_480x270.webp?du=3000&sqp=COj24ZcG&rs=AOn4CLBnVmlgSj23LaNtLHQKAVF1ZXsB0A" />
-            <Details>
-                <ChannelImage />
+        <Link to="/video/test" style={{textDecoration:"none"}}>
+        <Container type={type}>
+            <Image type={type} src="https://i.ytimg.com/an_webp/H3uPYyZjsaw/mqdefault_6s_480x270.webp?du=3000&sqp=COj24ZcG&rs=AOn4CLBnVmlgSj23LaNtLHQKAVF1ZXsB0A" />
+            <Details type={type}>
+                <ChannelImage type={type} src="https://yt3.ggpht.com/-Weca7gZCAF0tBcPwbpITNNyT8Rp2omE9U4Puf8L2JmG7k7eF5hkfA74fFftt-NR4A-ajJcbwFM=s68-c-k-c0x00ffffff-no-rj"/>
                 <Texts>
                     <Title>Test Video</Title>
                     <ChannelName>Tom and Jerry</ChannelName>
                     <Info>560,908 views * 1 day ago</Info>
                 </Texts>
             </Details>
-
         </Container>
+        </Link>
 
     )
 

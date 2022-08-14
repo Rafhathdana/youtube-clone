@@ -17,11 +17,12 @@ import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
 import HelpOutlinedIcon from '@mui/icons-material/HelpOutlined';
 import SettingsBrightnessOutlinedIcon from '@mui/icons-material/SettingsBrightnessOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import { Link } from "react-router-dom";
 const Container = styled.div`
    flex: 1;
-   background-color: ${({theme}) => theme.bg};
+   background-color: ${({ theme }) => theme.bgLighter};
    height: 100vh;
-   color: ${({theme}) => theme.text};
+   color: ${({ theme }) => theme.text};
    font-size: 14px;
    position: sticky;
    top: 0;
@@ -45,40 +46,46 @@ const Item = styled.div`
     gap: 20px;
     cursor: pointer;
     padding: 7.5px 0px;
+
+    &:hover{
+        background-color: ${({ theme }) => theme.soft};
+    }
 `;
 const Hr = styled.hr`
-margin: 15px 0px;
-border: 0.5px solid ${({theme}) => theme.soft};
+    margin: 15px 0px;
+    border: 0.5px solid ${({ theme }) => theme.soft};
 `
-const Login=styled.div``
-const Button=styled.button`
-padding: 5px 15px;
-background-color: transparent;
-border: 1px solid #3ea6ff;
-color: #3ea6ff;
-border-radius: 3px;
-font-weight: 500;
-margin-top: 10px;
-cursor: pointer;
-display: flex;
-align-items: center;
-gap: 5px;
-`;
+const Login = styled.div``
+const Button = styled.button`
+    padding: 5px 15px;
+    background-color: transparent;
+    border: 1px solid #3ea6ff;
+    color: #3ea6ff;
+    border-radius: 3px;
+    font-weight: 500;
+    margin-top: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    `;
 const Title = styled.h2`
-font-size: 14px;
-font-weight: 500;
-color:#aaaaaa;
-margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color:#aaaaaa;
+    margin-bottom: 20px;
 `
 
-const Menu = ({darkMode, setDarkMode}) => {
+const Menu = ({ darkMode, setDarkMode }) => {
     return (
         <Container>
             <Wrapper>
-                <Logo>
-                    <Img src={wetube} />
-                    WeTube
-                </Logo>
+                <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+                    <Logo>
+                        <Img src={wetube} />
+                        WeTube
+                    </Logo>
+                </Link>
                 <Item>
                     <HomeIcon />Home
                 </Item>
@@ -98,7 +105,9 @@ const Menu = ({darkMode, setDarkMode}) => {
                 <Hr />
                 <Login>
                     Sign in to like Videos , Comment and Subscribe.
+                    <Link to="signin" style={{textDecoration:"none"}}>
                     <Button><AccountCircleOutlinedIcon />SIGN IN</Button>
+                    </Link>
                 </Login>
                 <Hr />
                 <Title>BEST OF WETUBE</Title>
@@ -130,8 +139,9 @@ const Menu = ({darkMode, setDarkMode}) => {
                 <Item>
                     <HelpOutlinedIcon />Help
                 </Item>
-                <Item onClick={()=>setDarkMode(!darkMode)}>
-                    <SettingsBrightnessOutlinedIcon />Light Mode
+                <Item onClick={() => setDarkMode(!darkMode)}>
+                    <SettingsBrightnessOutlinedIcon />
+                    {darkMode ? "Light" : "Dark"} Mode
                 </Item>
             </Wrapper>
         </Container>
