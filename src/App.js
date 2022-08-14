@@ -20,7 +20,9 @@ const Main = styled.div`
   `;
 
 const Wrapper = styled.div`
-padding:22px 96px;`;
+padding:22px 96px;
+`;
+
 function App() {
   const [darkMode, setDarkMode] = useState(true)
   return (
