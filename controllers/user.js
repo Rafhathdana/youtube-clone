@@ -1,5 +1,27 @@
-export const test = (req,res) => {
+import { createError } from "../error"
 
-    res.json("it's successfull")
-    console.log("test is working!");
-}
+export const update = (req,res,next) => {
+    if(req.params.id === req.user.id){
+
+    }else{
+        return next(createError(403,"you can only update your account"))
+    }
+ }
+export const deleteUser = (req,res,next) => {
+
+ }
+export const getUser = (req,res,next) => {
+
+ }
+export const subscribe = (req,res,next) => {
+
+ }
+export const unsubscribe = (req,res,next) => {
+
+ }
+export const like = (req,res,next) => {
+
+ }
+export const dislike = (req,res,next) => {
+
+ }
