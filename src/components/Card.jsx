@@ -47,7 +47,7 @@ const Card = ({type}) => {
     return (
         <Link to="/video/test" style={{textDecoration:"none"}}>
         <Container type={type}>
-            <Image type={type} src="https://i.ytimg.com/an_webp/H3uPYyZjsaw/mqdefault_6s_480x270.webp?du=3000&sqp=COj24ZcG&rs=AOn4CLBnVmlgSj23LaNtLHQKAVF1ZXsB0A" />
+            <Image type={type} src="https://i.ytimg.com/vi/Au63DyjBQ7k/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBoRBkAK8oDxT7OH-e8jk02BGi4JA" />
             <Details type={type}>
                 <ChannelImage type={type} src="https://yt3.ggpht.com/-Weca7gZCAF0tBcPwbpITNNyT8Rp2omE9U4Puf8L2JmG7k7eF5hkfA74fFftt-NR4A-ajJcbwFM=s68-c-k-c0x00ffffff-no-rj"/>
                 <Texts>
