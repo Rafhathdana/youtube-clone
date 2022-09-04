@@ -1,9 +1,9 @@
 import express from "express"
-import { deleteComment, getComments } from "../controllers/comment.js";
+import { addComment, deleteComment, getComments } from "../controllers/comment.js";
 import { verifyTocken } from "../verifyTocken.js";
 
 const router = express.Router()
-router.post("/", verifyTocken, addComments)
+router.post("/", verifyTocken, addComment)
 router.delete("/:id", verifyTocken, deleteComment)
 router.get("/:videoid",getComments)
 
