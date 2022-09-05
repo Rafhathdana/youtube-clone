@@ -6,6 +6,11 @@ import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import AddTaskOutlinedIcon from '@mui/icons-material/AddTaskOutlined';
 import Comments from '../components/Comments';
 import Card from '../components/Card';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios';
 const Container = styled.div`
     display:flex;
     gap: 24px;
@@ -94,6 +99,26 @@ const Subscribe = styled.button`
 `;
 
 const Video = () => {
+    const { currentUser } = useSelector((state)=>state.user);
+    const dispatch= useDispatch();
+    const path = useLocation().pathname.split("/")[2]
+    const [video,setVideo]=useState({})
+    const [channel,setChannel]=useState({});
+
+    useEffect(()=>{
+        const fetchData = async () => {
+            try{
+                    const videoRes = await axios.get(`/videos/find/${path}`)
+                    const channelRes = await axios.get(`/users/find/${videoRes.userId}`);
+                    setVideo(videoRes.data)
+                    setChannel(channelRes.data)
+            }catch(err){
+
+            }
+        }
+        fetchData()
+    },[path])
+
     return (
         <Container>
             <Content>
@@ -127,7 +152,7 @@ const Video = () => {
                 <Hr />
                 <Channel>
                     <ChannelInfo>
-                            <Image src="https://yt3.ggpht.com/ytc/AMLnZu9cUznQWL4bMz_WkFGKsFVKzdwYbjcWukzPWfcf7g=s48-c-k-c0x00ffffff-no-rj" />
+                        <Image src="https://yt3.ggpht.com/ytc/AMLnZu9cUznQWL4bMz_WkFGKsFVKzdwYbjcWukzPWfcf7g=s48-c-k-c0x00ffffff-no-rj" />
                         <ChannelDetails>
                             <ChannelName>MovieCon Animasi</ChannelName>
                             <ChannelCounter>200k subscribers</ChannelCounter>
@@ -140,36 +165,36 @@ const Video = () => {
                 <Hr />
                 <Comments />
             </Content>
-            <Recommendation>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-            </Recommendation>
+            {/* <Recommendation>
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+                <Card type="sm" />
+            </Recommendation> */}
         </Container>
     )
 }
