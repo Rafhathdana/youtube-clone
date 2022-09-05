@@ -1,16 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownOffAltOutlinedIcon from '@mui/icons-material/ThumbDownOffAltOutlined';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import AddTaskOutlinedIcon from '@mui/icons-material/AddTaskOutlined';
 import Comments from '../components/Comments';
 import Card from '../components/Card';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState , useEffect} from 'react';
 import axios from 'axios';
+import { fetchSuccess } from '../redux/videoSlice';
+import { format } from "timeago.js";
 const Container = styled.div`
     display:flex;
     gap: 24px;
@@ -99,26 +102,30 @@ const Subscribe = styled.button`
 `;
 
 const Video = () => {
-    const { currentUser } = useSelector((state)=>state.user);
-    const dispatch= useDispatch();
-    const path = useLocation().pathname.split("/")[2]
-    const [video,setVideo]=useState({})
-    const [channel,setChannel]=useState({});
+    const { currentUser } = useSelector((state) => state.user);
+    const { currentVideo } = useSelector((state) => state.video)
+    const dispatch = useDispatch();
+    const path = useLocation().pathname.split("/")[2];
+    const [channel, setChannel] = useState({});
 
-    useEffect(()=>{
-        const fetchData = async () => {
-            try{
-                    const videoRes = await axios.get(`/videos/find/${path}`)
-                    const channelRes = await axios.get(`/users/find/${videoRes.userId}`);
-                    setVideo(videoRes.data)
-                    setChannel(channelRes.data)
-            }catch(err){
-
+    useEffect(() => {
+        const fetchData = async () =>{
+            try {
+                const videoRes = await axios.get(`/videos/find/${path}`);
+                const channelRes = await axios.get(`/users/find/${videoRes.data.userId}`);
+                setChannel(channelRes.data);
+                dispatch(fetchSuccess(videoRes.data));
+            } catch (err) {
             }
         }
         fetchData()
-    },[path])
-
+    }, [path,dispatch]);
+    const handleLike = async() => {
+        await axios.put(`/users/like/${currentVideo._id}`);
+    }
+    const handleDislike = async() => {
+        await axios.put(`/users/dislike/${currentVideo._id}`);
+    }
     return (
         <Container>
             <Content>
@@ -126,20 +133,28 @@ const Video = () => {
                     <iframe width="100%"
                         height="720"
                         src="https://www.youtube.com/embed/H3uPYyZjsaw"
-                        title="Tom and Jerry - Golf 2"
+                        // title={currentVideo.title}
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
                 </VideoWrapper>
-                <Title>Test Video</Title>
+                <Title>{currentVideo.title}</Title>
                 <Details>
-                    <Info>20,549,050 views  May 9, 2018</Info>
+                    <Info>{currentVideo.views} views  {format(currentVideo.createdAt)}</Info>
                     <Buttons>
-                        <Button>
-                            <ThumbUpOutlinedIcon />123
+                        <Button onClick={handleLike}>
+                           {currentVideo.likes?.includes(currentUser._id) ? (
+                            <ThumbUpIcon />
+                           ):(<ThumbUpOutlinedIcon />)}{" "}
+                           {currentVideo.likes?.length}
                         </Button>
-                        <Button>
-                            <ThumbDownOffAltOutlinedIcon />Dislike
+                        <Button onClick={handleDislike}>
+                            {currentVideo.dislikes?.includes(currentUser._id)? (
+                                <ThumbDownIcon />
+                            ) : (
+                            <ThumbDownOffAltOutlinedIcon />
+                            )}{""}
+                            Dislike
                         </Button>
                         <Button>
                             <ReplyOutlinedIcon />Share
@@ -152,12 +167,11 @@ const Video = () => {
                 <Hr />
                 <Channel>
                     <ChannelInfo>
-                        <Image src="https://yt3.ggpht.com/ytc/AMLnZu9cUznQWL4bMz_WkFGKsFVKzdwYbjcWukzPWfcf7g=s48-c-k-c0x00ffffff-no-rj" />
+                        <Image src={channel.img}/>
                         <ChannelDetails>
-                            <ChannelName>MovieCon Animasi</ChannelName>
-                            <ChannelCounter>200k subscribers</ChannelCounter>
-                            <Description>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam adipisci illum sequi at, corrupti illo minus necessitatibus dolorum nihil odit fugiat quae quod vitae consectetur provident dolorem similique unde aut.
-                            </Description>
+                            <ChannelName>{channel.name}</ChannelName>
+                            <ChannelCounter>{channel.subscribers} subscribers</ChannelCounter>
+                            <Description>{currentVideo.desc}</Description>
                         </ChannelDetails>
                     </ChannelInfo>
                     <Subscribe>SUBSCRIBE</Subscribe>
