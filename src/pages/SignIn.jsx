@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
+import axios from 'axios';
 const Container = styled.div`
     display:flex;
     flex-direction: column;
@@ -27,7 +27,8 @@ const SubTitle = styled.h2`
     font-size: 20px;
 `;
 const Input = styled.input`
-    border:1px solid ${({ theme }) => theme.soft};
+    border:1px solid ${({ theme }) => theme.text};
+    color:${({ theme }) => theme.soft};
     border-radius: 3px;
     padding: 10px;
     background-color: transparent;
@@ -56,18 +57,31 @@ const Link = styled.span`
 `;
 
 const SignIn = () => {
+    const [name,setName]=useState("")
+    const [email,setEmail]=useState("")
+    const [password,setPassword]=useState("")
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try{
+            const res =await axios.post("/auth/signin", {name,password});
+            console.log(res.data)
+        }catch(err){
+
+        }
+    }
     return (
         <Container>
             <Wrapper>
                 <Title>Sign in </Title>
                 <SubTitle>to Continue to WeTube</SubTitle>
-                <Input placeholder='Username' />
-                <Input type="password" placeholder='Password' />
-                <Button>Sign in</Button>
+                <Input placeholder='Username' onChange={e=>setName(e.target.value)}/>
+                <Input type="password" placeholder='Password' onChange={e=>setPassword(e.target.value)}/>
+                <Button onClick={handleLogin}>Sign in</Button>
                 <Title>or</Title>
-                <Input placeholder='Username' />
-                <Input placeholder='Email' />
-                <Input type="password" placeholder='Password' />
+                <Input placeholder='Username' onChange={e=>setName(e.target.value)} />
+                <Input placeholder='Email' onChange={e=>setEmail(e.target.value)}/>
+                <Input type="password" placeholder='Password' onChange={e=>setPassword(e.target.value)} />
                 <Button>Sign up</Button>
             </Wrapper>
             <More>
