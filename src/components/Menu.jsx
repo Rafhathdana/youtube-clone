@@ -89,12 +89,16 @@ const Menu = ({ darkMode, setDarkMode }) => {
                 <Item>
                     <HomeIcon />Home
                 </Item>
-                <Item>
-                    <ExploreOutlinedIcon />Explore
-                </Item>
-                <Item>
-                    <SubscriptionsOutlinedIcon />Subscriptions
-                </Item>
+                <Link to="trends" style={{ textDecoration: "none", color: "inherit"}}>
+                    <Item>
+                        <ExploreOutlinedIcon />Explore
+                    </Item>
+                </Link>
+                <Link to="subscriptions" style={{ textDecoration: "none", color: "inherit"}}>
+                    <Item>
+                        <SubscriptionsOutlinedIcon />Subscriptions
+                    </Item>
+                </Link>
                 <Hr />
                 <Item>
                     <VideoLibraryOutlinedIcon />Library
@@ -105,8 +109,8 @@ const Menu = ({ darkMode, setDarkMode }) => {
                 <Hr />
                 <Login>
                     Sign in to like Videos , Comment and Subscribe.
-                    <Link to="signin" style={{textDecoration:"none"}}>
-                    <Button><AccountCircleOutlinedIcon />SIGN IN</Button>
+                    <Link to="signin" style={{ textDecoration: "none" }}>
+                        <Button><AccountCircleOutlinedIcon />SIGN IN</Button>
                     </Link>
                 </Login>
                 <Hr />
