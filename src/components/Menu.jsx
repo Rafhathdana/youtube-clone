@@ -18,6 +18,7 @@ import HelpOutlinedIcon from '@mui/icons-material/HelpOutlined';
 import SettingsBrightnessOutlinedIcon from '@mui/icons-material/SettingsBrightnessOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
 const Container = styled.div`
    flex: 1;
    background-color: ${({ theme }) => theme.bgLighter};
@@ -77,6 +78,7 @@ const Title = styled.h2`
 `
 
 const Menu = ({ darkMode, setDarkMode }) => {
+    const { currentUser } = useSelector((state) => state.user);
     return (
         <Container>
             <Wrapper>
@@ -89,12 +91,12 @@ const Menu = ({ darkMode, setDarkMode }) => {
                 <Item>
                     <HomeIcon />Home
                 </Item>
-                <Link to="trends" style={{ textDecoration: "none", color: "inherit"}}>
+                <Link to="trends" style={{ textDecoration: "none", color: "inherit" }}>
                     <Item>
                         <ExploreOutlinedIcon />Explore
                     </Item>
                 </Link>
-                <Link to="subscriptions" style={{ textDecoration: "none", color: "inherit"}}>
+                <Link to="subscriptions" style={{ textDecoration: "none", color: "inherit" }}>
                     <Item>
                         <SubscriptionsOutlinedIcon />Subscriptions
                     </Item>
@@ -107,6 +109,8 @@ const Menu = ({ darkMode, setDarkMode }) => {
                     <HistoryOutlinedIcon />History
                 </Item>
                 <Hr />
+
+                {!currentUser && <>
                 <Login>
                     Sign in to like Videos , Comment and Subscribe.
                     <Link to="signin" style={{ textDecoration: "none" }}>
@@ -114,6 +118,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
                     </Link>
                 </Login>
                 <Hr />
+                </>}
                 <Title>BEST OF WETUBE</Title>
                 <Item>
                     <LibraryMusicOutlinedIcon />Music
