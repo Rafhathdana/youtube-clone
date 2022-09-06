@@ -5,6 +5,6 @@ import { verifyTocken } from "../verifyTocken.js";
 const router = express.Router()
 router.post("/", verifyTocken, addComment)
 router.delete("/:id", verifyTocken, deleteComment)
-router.get("/:videoid",getComments)
+router.get("/:videoId",getComments)
 
 export default router;
